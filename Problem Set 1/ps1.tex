@@ -1,0 +1,141 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{bbm}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Computational Methods\\Problem Set 1}
+\author{Ian O'Donnell}
+\date{January 23, 2023}
+\setlength {\marginparwidth }{2cm} 
+\begin{document}
+
+\maketitle
+
+\subsection*{Problem 1}
+
+A competitive equilibrium is a set of prices $ \{p_t , r_t, w_t\}_{t=0}^\infty $, an allocation $ \{k_t^d, n_t^d, y_t\}_{t=0}^\infty $
+for the firm, and an allocation $ \{c_t, i_t, x_{t+1}, k_t^s, n_t^s,\}_{t=0}^\infty $ for the household such that: 
+\begin{enumerate}
+    \item The firm's allocation solves: 
+    \begin{align*}
+        \max_{k_t, n_t} \pi = \sum_{t=0}^{\infty} p_t [y_t - r_t k_t - w_t n_t] \\
+        \text{s.t.} \quad y_t \leq F(k_t, n_t)\\
+    \end{align*}
+
+    \item The household's allocation solves: 
+    \begin{gather*}
+        \max_{c_t, n_t} \sum_{t=0}^{\infty} \beta^t u(c_t) \\
+        \text{s.t.} \quad \sum_{t=0}^{\infty} p_t[c_t + i_t] \leq \sum_{t=0}^{\infty} p_t[r_t k_t + w_t n_t] + \pi _t \\
+        x_{t+1} = i_t, \quad 0 \leq n_t \leq 1, \quad 0 \leq k_t \leq x_t \\
+        k_0 \quad \text{given}, \quad c_t \geq 0, \quad x_{t+1} \geq 0 \\
+        \text{TVC:} \quad \lim_{t \rightarrow \infty} p_t k_{t+1} = 0 
+    \end{gather*}
+
+    \item All markets clear for all $t$: $k_t^d = k_t^s$, $n_t^d = n_t^s$, $c_t + i_t = y_t$
+\end{enumerate}
+
+\subsection*{Problem 2}
+
+The social planner solves: 
+
+\begin{gather*}
+    \max_{c_t, k_t, n_t} \sum_{t=0}^{\infty} \beta^t u(c_t) \\
+    \text{s.t.} \quad F(k_t, n_t) = c_t + k_{t+1} \\
+    \quad c_t \geq 0, \quad k_t \geq 0, \quad 0 \leq n_t \leq 1 \forall t \\
+    \quad k_0 \quad \text{given} \\
+    \quad \text{TVC:} \quad \lim_{t \rightarrow \infty} \beta^t u'(F(k_t, n_t) - k_{t+1})F_k(k_t, n_t)k_t = 0 
+\end{gather*}
+
+\subsection*{Problem 3}
+
+We will show that if the allocation and prices $ \{c_t^e, k_{t+1}^e, p_t^e, w_t^e, r_t^e \}_{t=0}^\infty $ is an 
+equilibrium, then $\{c_t^e, k_{t+1}^e \}_{t=0}^\infty $ is a solution to the planners problem. Afterwards, we will also show
+that if $\{c_t^*, k_{t+1}^* \}_{t=0}^\infty $ is a solution to the planners problem, then we can also find prices that 
+support it as an equilibrium. 
+
+First, suppose that there exists an allocation $\{c_t', k_{t+1}' \}_{t=0}^\infty $ that provides a higher utility level. 
+Then it must violate consumers budget constraint or it would have been chosen by the consumer. The implies that the household 
+earns profits from the firm. This violates the firm's profit maximizing assumption. This is a contradiction. 
+
+Next, suppose that $\{c_t^*, k_{t+1}^* \}_{t=0}^\infty $ is a solution to the planners problem. First note that the partial
+derivatives of the production function give $r_t$ and $w_t$. Then let $f(k_t) = F(k_t, 1)$. We then suppose that 
+$p_{t+1} = \frac{p_t}{f'(k_t)}$. This ensures that the first order conditions in the planners problem and the households
+problem can be shown to be equivalent. Then the TVCs can also be shown to be equivalent using the relative prices and the 
+first order conditions. 
+
+\subsection*{Problem 4}
+
+The planners dynamic programming problem is: 
+
+\begin{equation*}
+    v(k) = \max_{0 \leq k' \leq f(k)} u(f(k) - k') + \beta v(k')
+\end{equation*}
+
+\subsection*{Problem 5}
+
+To analytically solve the dynamic programming problem, we will use guess and verify with following initial guess:
+$v(k) = A + B \ln(k)$. 
+
+\begin{gather*}
+    v(k) = \max_{0 \leq k' \leq zk^\alpha} u(zk^\alpha - k') + \beta v(A + B \ln(k)) \\
+    \text{FOC:} \frac{-1}{zk^\alpha - k'} + \frac{\beta B}{k'} = 0 \\
+    k' = \frac{\beta B z k^\alpha}{1 + \beta B} \\
+\end{gather*}
+
+Next, evaluate the the objective function at the optimal value for $k'$
+
+\begin{gather*}
+    \ln(zk^\alpha - \frac{\beta B z k^\alpha}{1 + \beta B} ) + \beta(A + B \ln (\frac{\beta B z k^\alpha}{1 + \beta B})) \\
+    \implies B = \frac{\alpha}{1 - \beta \alpha} \\
+    \implies A = \frac{1}{1 - \beta}[ln(1-\beta \alpha) + \frac{\beta \alpha}{1 - \beta \alpha} \ln(\beta \alpha) + (\frac{\alpha}{1 - \beta \alpha})\ln(z)] \\
+\end{gather*}
+
+\begin{equation*}
+    \implies g(k) = \frac{\beta \alpha}{1 - \beta \alpha} (1 - \beta \alpha) z k^\alpha = \beta \alpha z k^\alpha
+\end{equation*}
+
+\subsection*{Problem 6}
+
+Steady States: 
+
+\begin{equation*}
+    \implies \bar{k} = \beta \alpha z \bar{k}^\alpha \implies \bar{k} = (\beta \alpha z)^{\frac{1}{1-\alpha}}
+\end{equation*}
+
+\begin{gather*}
+    \bar{c} = f(\bar{k}) - \bar{k}, \quad \bar{y} = f(\bar{k}) \\
+    \bar{r} = F_k(\bar{k}, 1), \quad \bar{w} = F_n(\bar{k}, 1)
+\end{gather*}
+
+\subsection*{Problem 7}
+
+\begin{center}
+    \includegraphics*[scale = 0.5]{fig1.png}
+\end{center}
+
+\begin{center}
+    \includegraphics*[scale = 0.5]{fig2.png}
+\end{center}
+
+\begin{center}
+    \includegraphics*[scale = 0.5]{fig3.png}
+\end{center}
+
+\begin{center}
+    \includegraphics*[scale = 0.5]{fig4.png}
+\end{center}
+
+\begin{center}
+    \includegraphics*[scale = 0.5]{fig5.png}
+\end{center}
+
+
+
+\end{document}

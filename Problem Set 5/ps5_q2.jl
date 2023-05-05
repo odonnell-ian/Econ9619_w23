@@ -129,4 +129,10 @@ end
 # record time and number of iterations 
 @time x = vfi1()
 
-p7 = contour(x[6], k_grid, x[1])
+p7b = contour(x[6], k_grid, x[1])
+p8b = contour(x[6], k_grid, x[2])
+p9b = contour(x[6], k_grid, x[3])
+
+savefig(p7b, "p7b.png")
+savefig(p8b, "p8b.png")
+savefig(p9b, "p9b.png")

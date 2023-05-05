@@ -101,3 +101,6 @@ p1 = plot(dom, [u1_true inter1 inter12])
 inter2 = lin_int(dat_dom, u2_dat, dom)
 inter22 = cubic_spline(dat_dom, u2_dat, dom)
 p2 = plot(dom, [u2_true inter2 inter22])
+
+savefig(p1, "p1.png")
+savefig(p2, "p2.png")

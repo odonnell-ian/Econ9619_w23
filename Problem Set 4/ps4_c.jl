@@ -148,3 +148,39 @@ end
 
 # record time and number of iterations 
 @time x = vfi1()
+
+# plot value function 
+p1 = plot(k_grid, x[1]);
+# plot policy functions 
+p2 = plot(k_grid,  [x[2] k_grid]);
+p3 = plot(k_grid, x[3]);
+
+# Calculate euler errors and plot 
+# capital first 
+k_for = x[2];
+k_itp = linear_interpolation(k_grid, x[2])
+k_for2 = k_itp(x[2])
+l_curr = x[3]
+l_itp = linear_interpolation(k_grid, x[3])
+l_for = l_itp(x[3])
+
+c_plan = z.*k_grid.^alpha.*(l_curr.^(1-alpha)) - k_for + (1-δ).*k_grid;
+rhs_k = (z.*k_grid.^alpha.*(l_curr.^(1-alpha)) - k_for + (1-δ).*k_grid).^(-sig);
+lhs1_k = (z.*k_for.^alpha.*(l_for.^(1-alpha)) - k_for2 + (1-δ).*k_for).^(-sig); # check here if things work
+lhs2_k = ((alpha*z).*k_for.^(alpha - 1).*(l_for.^(1-alpha)) .+ (1 - δ));
+
+l_err = (rhs_k.*((z*(1-alpha))*k_grid.^(alpha).*l_curr.^(-alpha)))./(χ * l_curr.^η).-1;
+
+resid = β*(lhs1_k .* lhs2_k)./rhs_k .- 1;
+
+p4 = scatter(k_grid, resid);
+hline!([0.01 -0.01]);
+#savefig(p4, "resid.png")
+
+p6 = plot(k_grid, z*(k_grid.^alpha).*(x[3].^(1-alpha)) - x[2] + (1-δ)*k_grid)
+
+savefig(p4, "residc.png")
+savefig(p1, "valuec.png")
+savefig(p2, "capitalc.png")
+savefig(p3, "labourc.png")
+savefig(p6, "consumptionc.png")

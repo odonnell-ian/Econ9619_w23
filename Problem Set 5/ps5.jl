@@ -68,6 +68,7 @@ mc_row15, grid_r15 = rouwenhurst(rho1, sig1, 15)
 
 # simulate
 function mc_sample_path(P, init, sample_size)
+    # function from quant econ 
    @assert size(P)[1] == size(P)[2] # square required
     N = size(P)[1] # should be square
 
@@ -141,4 +142,16 @@ p8 = histogram(sim_t_15)
 p9 = histogram(sim_r_5)
 p11 = histogram(sim_r_15)
 
+
+
+savefig(p1, "p1.png")
+savefig(p2, "p2.png")
+savefig(p3, "p3.png")
+savefig(p4, "p4.png")
+savefig(p5, "p5.png")
+savefig(p6, "p6.png")
+savefig(p7, "p7.png")
+savefig(p8, "p8.png")
+savefig(p9, "p9.png")
+savefig(p11, "p11.png")
 

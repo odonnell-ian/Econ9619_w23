@@ -21,7 +21,7 @@ w_ss = z*(1-alpha)*k_ss^alpha*l_ss^(-alpha);
 # Problem 5, Part a --------------------------------------------------------
 k_low = 10^(-5);
 k_high = 2*k_ss;
-grid_size = 300; 
+grid_size = 50; 
 max_iter = 300; 
 l_len = 30;
 
@@ -102,10 +102,12 @@ l_err = (rhs_k.*((z*(1-alpha))*k_grid.^(alpha).*l_curr.^(-alpha)))./(χ * l_curr
 
 resid = β*(lhs1_k .* lhs2_k)./rhs_k .- 1;
 
-scatter(k_grid, resid);
+p4 = scatter(k_grid, resid);
 hline!([0.01 -0.01]);
 savefig(p4, "resid.png")
-
+savefig(p1, "value.png")
+savefig(p2, "capital.png")
+savefig(p3, "labour.png")
 
 
 

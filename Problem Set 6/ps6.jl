@@ -134,7 +134,7 @@ function Tv(v_old1, k_grid1, p, zg)
     #t1 = interpolate(k_end[:,1], v_new[:,1], Gridded(Linear()))
     
     #v_new = [interpolate((k_end[:,n],), v_new[:,n], Gridded(Linear())) for n in 1:z_len]
-    v_new = [interpolate((k_grid1,), v_new[:,n], Gridded(Linear())) for n in 1:z_len]
+    v_new = [interpolate((k_grid1,), v_new[:,n], Gridded(Linear())) for n in 1:z_len] # this is not correct, but the above line gives bounds errors 
     return v_new, k_end, l_end
 end
 # A = rand(20)
@@ -180,5 +180,16 @@ end
 
 # record time and number of iterations 
 @time x = vfi1()
+ x1 = zeros(30, 5)
+ for i = 1:30
+    for j = 1:5 
+        x1[i, j] = x[1][j](k_grid[i])
+    end
+end
+p7 = contour(x[6], k_grid, x1)
+p8 = contour(x[6], k_grid, x[2])
+p9 = contour(x[6], k_grid, x[3])
 
-p7 = contour(k_grid, x[6], x[1])
+savefig(p7, "p7.png")
+savefig(p8, "p8.png")
+savefig(p9, "p9.png")

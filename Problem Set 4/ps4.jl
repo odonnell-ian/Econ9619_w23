@@ -172,6 +172,12 @@ resid = β*(lhs1_k .* lhs2_k)./rhs_k .- 1;
 
 p4 = scatter(k_grid, resid);
 hline!([0.01 -0.01]);
-savefig(p4, "resid.png")
+#savefig(p4, "resid.png")
 
 p6 = plot(k_grid, z*(k_grid.^alpha).*(x[3].^(1-alpha)) - x[2] + (1-δ)*k_grid)
+
+savefig(p4, "resid.png")
+savefig(p1, "value.png")
+savefig(p2, "capital.png")
+savefig(p3, "labour.png")
+savefig(p6, "consumption.png")
